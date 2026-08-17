@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recanto Fitness | Academia em São Paulo - SP</title>
+<meta name="description" content="Conheça a Recanto Fitness em São Paulo. Estrutura completa, equipamentos de qualidade e ambiente preparado para sua evolução. Fale conosco pelo WhatsApp.">
+<meta name="keywords" content="academia em São Paulo, academia na Terceira Divisão, academia no Jardim da Laranjeira, academia Avenida Bento Guelfi, academia perto de mim, musculação em São Paulo, Recanto Fitness, academia Zona Leste de São Paulo">
+<link rel="canonical" href="https://www.recantofitness.com.br/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="business.business">
+<meta property="og:title" content="Recanto Fitness | Academia em São Paulo - SP">
+<meta property="og:description" content="Estrutura completa, equipamentos de qualidade e ambiente preparado para sua evolução. Fale conosco pelo WhatsApp.">
+<meta property="og:image" content="/assets/img/og-image.jpg">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Recanto Fitness">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+<!-- Schema.org: LocalBusiness / ExerciseGym -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ExerciseGym",
+  "name": "Recanto Fitness",
+  "image": "https://www.recantofitness.com.br/assets/img/og-image.jpg",
+  "url": "https://www.recantofitness.com.br/",
+  "telephone": "+5511993053083",
+  "email": "rftrecantofitness@gmail.com",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Avenida Bento Guelfi, 2662 - Terceira Divisão (Jardim da Laranjeira), Zona Leste",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "postalCode": "08381-001",
+    "addressCountry": "BR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "06:00",
+      "closes": "23:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday"],
+      "opens": "08:00",
+      "closes": "14:00"
+    }
+  ],
+  "sameAs": ["https://www.instagram.com/recanto_fitness"],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.6",
+    "reviewCount": "29"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="site-header">
+  <div class="header-inner">
+    <a href="#inicio" class="logo">RECANTO<span>FITNESS</span></a>
+
+    <nav class="nav-desktop" aria-label="Navegação principal">
+      <a href="#inicio">Início</a>
+      <a href="#academia">A Academia</a>
+      <a href="#estrutura">Estrutura</a>
+      <a href="#planos">Planos</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#localizacao">Localização</a>
+    </nav>
+
+    <a href="#" class="btn btn-primary btn-nav" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">Comece Agora</a>
+
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Fora do <header>: backdrop-filter no header (estado "scrolled") cria um novo
+     containing block para position:fixed, o que encolheria este menu se ficasse
+     aninhado nele. Mantido como irmão para preencher a viewport corretamente. -->
+<nav class="nav-mobile" id="mobile-nav" aria-label="Navegação móvel">
+  <a href="#inicio">Início</a>
+  <a href="#academia">A Academia</a>
+  <a href="#estrutura">Estrutura</a>
+  <a href="#planos">Planos</a>
+  <a href="#depoimentos">Depoimentos</a>
+  <a href="#localizacao">Localização</a>
+  <a href="#" class="btn btn-primary" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">Comece Agora</a>
+</nav>
+
+<main>
+
+<!-- ============ 00 — ABERTURA PREMIUM (logo → vídeo da equipe → site) ============ -->
+<!-- Tall pinned container: .brand-intro-sticky stays fixed to the viewport
+     while the user scrolls through it, and js/app.js (wireBrandIntro) maps
+     scroll progress (0→1) across that pin to every stage below. -->
+<section class="brand-intro" id="brand-intro">
+  <div class="brand-intro-sticky">
+
+    <!-- Etapa 1: logo -->
+    <div class="logo-stage" id="logo-stage">
+      <video
+        id="logo-video"
+        class="logo-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        webkit-playsinline="true"
+        preload="auto"
+        poster="assets/img/logo-intro-poster.jpg"
+        aria-label="Animação da marca Recanto Fitness">
+        <source src="assets/video/logo-intro.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- Etapa 2: vídeo da equipe, revelado "de dentro" da logo -->
+    <div class="team-stage">
+      <div class="team-video-frame" id="team-video-frame">
+        <video
+          id="team-video"
+          class="team-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          webkit-playsinline="true"
+          preload="auto"
+          poster="assets/img/intro-poster.jpg"
+          aria-label="Vídeo institucional da equipe Recanto Fitness">
+          <source src="assets/video/intro.mp4" type="video/mp4">
+        </video>
+        <div class="team-video-overlay" id="team-video-overlay"></div>
+      </div>
+
+      <div class="team-copy" id="team-copy">
+        <p class="eyebrow">Recanto Fitness</p>
+        <h2 class="team-copy-title">ONDE A EVOLUÇÃO<br><span class="text-yellow">ACONTECE.</span></h2>
+        <p class="team-copy-text">Estrutura, equipe e ambiente preparados para fazer você ir além.</p>
+      </div>
+    </div>
+
+    <div class="brand-intro-handoff" id="brand-intro-handoff"></div>
+
+    <div class="scroll-cue" id="brand-intro-cue">
+      <span>Descubra a Recanto Fitness</span>
+      <svg class="scroll-cue-arrow" width="16" height="24" viewBox="0 0 16 24" fill="none" aria-hidden="true">
+        <path d="M8 0V22M8 22L1 15M8 22L15 15" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 — HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero-bg">
+    <img src="assets/img/pesos-livres-full.webp" alt="Área de pesos livres da Recanto Fitness" loading="eager">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content reveal">
+    <p class="eyebrow">Recanto Fitness</p>
+    <h1 class="hero-title">O SEU PRÓXIMO<br>NÍVEL COMEÇA<br><span class="text-yellow">AQUI.</span></h1>
+    <p class="hero-sub">Estrutura, equipamentos e ambiente preparados para quem decidiu evoluir.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary btn-lg" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">Quero Começar →</a>
+      <a href="#academia" class="btn btn-ghost btn-lg">Conheça a Academia</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 — MARQUEE ============ -->
+<section class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>FORÇA&nbsp;•&nbsp;DISCIPLINA&nbsp;•&nbsp;EVOLUÇÃO&nbsp;•&nbsp;PERFORMANCE&nbsp;•&nbsp;RESULTADO&nbsp;•&nbsp;RECANTO FITNESS&nbsp;•&nbsp;</span>
+    <span>FORÇA&nbsp;•&nbsp;DISCIPLINA&nbsp;•&nbsp;EVOLUÇÃO&nbsp;•&nbsp;PERFORMANCE&nbsp;•&nbsp;RESULTADO&nbsp;•&nbsp;RECANTO FITNESS&nbsp;•&nbsp;</span>
+  </div>
+</section>
+
+<!-- ============ 04 — AULAS (showcase premium) ============ -->
+<section class="aulas" id="aulas">
+  <span class="aulas-bg-word" aria-hidden="true">MOVE</span>
+  <div class="container aulas-grid">
+
+    <div class="aulas-col">
+      <p class="eyebrow reveal">Aulas</p>
+      <h2 class="section-title reveal">ESCOLHA O RITMO<br>DO SEU <span class="text-yellow">TREINO.</span></h2>
+      <p class="aulas-subtitle reveal">Conheça as aulas da Recanto Fitness e encontre a modalidade ideal para sua energia, objetivo e estilo de treino.</p>
+
+      <div class="aula-list" role="tablist" aria-label="Aulas da Recanto Fitness">
+
+        <div class="aula-item-wrap reveal">
+          <button class="aula-item is-active" type="button" role="tab" data-index="0" aria-selected="true" aria-controls="aula-visual">
+            <span class="aula-num">01</span>
+            <span class="aula-item-body">
+              <span class="aula-item-title">HIIT</span>
+              <span class="aula-item-desc">Treino intenso e dinâmico para condicionamento, ritmo e alto gasto calórico.</span>
+            </span>
+          </button>
+          <div class="aula-item-mobile-slot" data-slot="0"></div>
+        </div>
+
+        <div class="aula-item-wrap reveal">
+          <button class="aula-item" type="button" role="tab" data-index="1" aria-selected="false" aria-controls="aula-visual">
+            <span class="aula-num">02</span>
+            <span class="aula-item-body">
+              <span class="aula-item-title">Jump</span>
+              <span class="aula-item-desc">Aula cheia de energia, com movimentos intensos e foco cardiovascular.</span>
+            </span>
+          </button>
+          <div class="aula-item-mobile-slot" data-slot="1"></div>
+        </div>
+
+        <div class="aula-item-wrap reveal">
+          <button class="aula-item" type="button" role="tab" data-index="2" aria-selected="false" aria-controls="aula-visual">
+            <span class="aula-num">03</span>
+            <span class="aula-item-body">
+              <span class="aula-item-title">Fit Dance</span>
+              <span class="aula-item-desc">Música, movimento e diversão em uma aula envolvente e cheia de ritmo.</span>
+            </span>
+          </button>
+          <div class="aula-item-mobile-slot" data-slot="2"></div>
+        </div>
+
+        <div class="aula-item-wrap reveal">
+          <button class="aula-item" type="button" role="tab" data-index="3" aria-selected="false" aria-controls="aula-visual">
+            <span class="aula-num">04</span>
+            <span class="aula-item-body">
+              <span class="aula-item-title">Zumba</span>
+              <span class="aula-item-desc">Dança e cardio combinados para um treino leve, animado e eficiente.</span>
+            </span>
+          </button>
+          <div class="aula-item-mobile-slot" data-slot="3"></div>
+        </div>
+
+        <div class="aula-item-wrap reveal">
+          <button class="aula-item" type="button" role="tab" data-index="4" aria-selected="false" aria-controls="aula-visual">
+            <span class="aula-num">05</span>
+            <span class="aula-item-body">
+              <span class="aula-item-title">Pilates</span>
+              <span class="aula-item-desc">Controle corporal, mobilidade, equilíbrio e fortalecimento em movimentos conscientes.</span>
+            </span>
+          </button>
+          <div class="aula-item-mobile-slot" data-slot="4"></div>
+        </div>
+
+        <div class="aula-item-wrap reveal">
+          <button class="aula-item" type="button" role="tab" data-index="5" aria-selected="false" aria-controls="aula-visual">
+            <span class="aula-num">06</span>
+            <span class="aula-item-body">
+              <span class="aula-item-title">Bike</span>
+              <span class="aula-item-desc">Aula intensa com foco em resistência, ritmo e performance.</span>
+            </span>
+          </button>
+          <div class="aula-item-mobile-slot" data-slot="5"></div>
+        </div>
+
+        <div class="aula-item-wrap reveal">
+          <button class="aula-item" type="button" role="tab" data-index="6" aria-selected="false" aria-controls="aula-visual">
+            <span class="aula-num">07</span>
+            <span class="aula-item-body">
+              <span class="aula-item-title">Combat</span>
+              <span class="aula-item-desc">Movimentos inspirados em luta, com intensidade, explosão e muita energia.</span>
+            </span>
+          </button>
+          <div class="aula-item-mobile-slot" data-slot="6"></div>
+        </div>
+
+        <div class="aula-item-wrap reveal">
+          <button class="aula-item" type="button" role="tab" data-index="7" aria-selected="false" aria-controls="aula-visual">
+            <span class="aula-num">08</span>
+            <span class="aula-item-body">
+              <span class="aula-item-title">GAP</span>
+              <span class="aula-item-desc">Foco em glúteos, abdômen e pernas para fortalecimento e definição.</span>
+            </span>
+          </button>
+          <div class="aula-item-mobile-slot" data-slot="7"></div>
+        </div>
+
+      </div>
+
+      <div class="aulas-cta reveal">
+        <p class="aulas-cta-label">Quer saber mais sobre as aulas?</p>
+        <p class="aulas-cta-text">Fale com a equipe da Recanto Fitness e descubra qual modalidade combina mais com você.</p>
+        <a href="#" class="btn btn-primary" data-wa data-wa-msg="Olá! Vi no site as aulas da Recanto Fitness e gostaria de saber mais sobre as modalidades disponíveis.">Quero Saber Mais →</a>
+      </div>
+    </div>
+
+    <div class="aulas-visual-col reveal">
+      <div class="aula-visual" id="aula-visual">
+
+        <div class="aula-slide is-active" data-slide="0">
+          <div class="aula-slide-panel">
+            <span class="aula-slide-panel-word">POWER</span>
+          </div>
+          <div class="aula-slide-content">
+            <div class="aula-tags"><span class="aula-tag">Intensidade</span><span class="aula-tag">Cardio</span></div>
+            <h3 class="aula-slide-name">HIIT</h3>
+            <p class="aula-slide-phrase">Treino intenso e dinâmico para condicionamento, ritmo e alto gasto calórico.</p>
+          </div>
+        </div>
+
+        <div class="aula-slide" data-slide="1">
+          <img src="assets/img/cardio-esteiras-grid.webp" alt="Aula de Jump na Recanto Fitness" loading="lazy">
+          <div class="aula-slide-overlay"></div>
+          <div class="aula-slide-content">
+            <div class="aula-tags"><span class="aula-tag">Energia</span><span class="aula-tag">Cardio</span></div>
+            <h3 class="aula-slide-name">Jump</h3>
+            <p class="aula-slide-phrase">Aula cheia de energia, com movimentos intensos e foco cardiovascular.</p>
+          </div>
+        </div>
+
+        <div class="aula-slide" data-slide="2">
+          <img src="assets/img/aula-fitdance.webp" alt="Aula de Fit Dance na Recanto Fitness" loading="lazy">
+          <div class="aula-slide-overlay"></div>
+          <div class="aula-slide-content">
+            <div class="aula-tags"><span class="aula-tag">Movimento</span><span class="aula-tag">Ritmo</span></div>
+            <h3 class="aula-slide-name">Fit Dance</h3>
+            <p class="aula-slide-phrase">Música, movimento e diversão em uma aula envolvente e cheia de ritmo.</p>
+          </div>
+        </div>
+
+        <div class="aula-slide" data-slide="3">
+          <img src="assets/img/aula-zumba.webp" alt="Aula de Zumba na Recanto Fitness" loading="lazy">
+          <div class="aula-slide-overlay"></div>
+          <div class="aula-slide-content">
+            <div class="aula-tags"><span class="aula-tag">Dança</span><span class="aula-tag">Diversão</span></div>
+            <h3 class="aula-slide-name">Zumba</h3>
+            <p class="aula-slide-phrase">Dança e cardio combinados para um treino leve, animado e eficiente.</p>
+          </div>
+        </div>
+
+        <div class="aula-slide" data-slide="4">
+          <video
+            class="aula-slide-video"
+            muted
+            loop
+            playsinline
+            webkit-playsinline="true"
+            preload="none"
+            poster="assets/img/aula-pilates-poster.jpg"
+            aria-label="Aula de Pilates na Recanto Fitness">
+            <source src="assets/video/aula-pilates.mp4" type="video/mp4">
+          </video>
+          <div class="aula-slide-overlay"></div>
+          <div class="aula-slide-content">
+            <div class="aula-tags"><span class="aula-tag">Equilíbrio</span><span class="aula-tag">Controle</span></div>
+            <h3 class="aula-slide-name">Pilates</h3>
+            <p class="aula-slide-phrase">Controle corporal, mobilidade, equilíbrio e fortalecimento em movimentos conscientes.</p>
+          </div>
+        </div>
+
+        <div class="aula-slide" data-slide="5">
+          <img src="assets/img/cardio-spin-grid.webp" alt="Aula de Bike na Recanto Fitness" loading="lazy">
+          <div class="aula-slide-overlay"></div>
+          <div class="aula-slide-content">
+            <div class="aula-tags"><span class="aula-tag">Resistência</span><span class="aula-tag">Performance</span></div>
+            <h3 class="aula-slide-name">Bike</h3>
+            <p class="aula-slide-phrase">Aula intensa com foco em resistência, ritmo e performance.</p>
+          </div>
+        </div>
+
+        <div class="aula-slide" data-slide="6">
+          <div class="aula-slide-panel">
+            <span class="aula-slide-panel-word">FIGHT</span>
+          </div>
+          <div class="aula-slide-content">
+            <div class="aula-tags"><span class="aula-tag">Explosão</span><span class="aula-tag">Energia</span></div>
+            <h3 class="aula-slide-name">Combat</h3>
+            <p class="aula-slide-phrase">Movimentos inspirados em luta, com intensidade, explosão e muita energia.</p>
+          </div>
+        </div>
+
+        <div class="aula-slide" data-slide="7">
+          <div class="aula-slide-panel">
+            <span class="aula-slide-panel-word">DEFINIÇÃO</span>
+          </div>
+          <div class="aula-slide-content">
+            <div class="aula-tags"><span class="aula-tag">Glúteos</span><span class="aula-tag">Abdômen</span></div>
+            <h3 class="aula-slide-name">GAP</h3>
+            <p class="aula-slide-phrase">Foco em glúteos, abdômen e pernas para fortalecimento e definição.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 05 — SOBRE ============ -->
+<section class="about" id="academia">
+  <div class="container about-grid">
+    <div class="about-media reveal">
+      <img src="assets/img/musculacao-piso-grid.webp" alt="Piso de musculação da Recanto Fitness" loading="lazy" width="1000" height="667">
+    </div>
+    <div class="about-content reveal">
+      <p class="eyebrow">Sobre Nós</p>
+      <h2 class="section-title">MAIS DO QUE UMA ACADEMIA.<br>UM AMBIENTE PARA <span class="text-yellow">EVOLUIR.</span></h2>
+      <p class="section-body">A Recanto Fitness oferece uma estrutura completa para quem busca saúde, qualidade de vida, força e evolução. Um ambiente preparado para fazer do treino parte da sua rotina.</p>
+      <a href="#estrutura" class="btn btn-outline">Conheça Nossa Estrutura</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 — ESTRUTURA ============ -->
+<section class="structure" id="estrutura">
+  <div class="container">
+    <p class="eyebrow reveal">Estrutura</p>
+    <h2 class="section-title reveal">ESTRUTURA PARA QUEM<br>LEVA O TREINO A <span class="text-yellow">SÉRIO.</span></h2>
+
+    <div class="structure-grid">
+      <article class="structure-item reveal">
+        <div class="structure-img"><img src="assets/img/musculacao-piso-grid.webp" alt="Área de musculação da Recanto Fitness" loading="lazy" width="1000" height="667"></div>
+        <h3><span class="text-yellow">01</span> — Musculação</h3>
+        <p>Máquinas e equipamentos completos para todos os grupos musculares.</p>
+      </article>
+      <article class="structure-item reveal">
+        <div class="structure-img"><img src="assets/img/pesos-livres-grid.webp" alt="Área de pesos livres da Recanto Fitness" loading="lazy" width="1000" height="667"></div>
+        <h3><span class="text-yellow">02</span> — Pesos Livres</h3>
+        <p>Halteres, barras e anilhas para treinos de força e hipertrofia.</p>
+      </article>
+      <article class="structure-item reveal">
+        <div class="structure-img"><img src="assets/img/cardio-esteiras-grid.webp" alt="Esteiras da Recanto Fitness" loading="lazy" width="1000" height="667"></div>
+        <h3><span class="text-yellow">03</span> — Cardio</h3>
+        <p>Esteiras e bikes com vista para a cidade, para o seu condicionamento.</p>
+      </article>
+      <article class="structure-item reveal">
+        <div class="structure-img"><img src="assets/img/cardio-spin-grid.webp" alt="Bikes de spin da Recanto Fitness" loading="lazy" width="1000" height="667"></div>
+        <h3><span class="text-yellow">04</span> — Equipamentos</h3>
+        <p>Tecnologia e manutenção constante para treinar com segurança.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 — DIFERENCIAIS (painel interativo) ============ -->
+<section class="differentials" id="differentials">
+  <div class="container differentials-grid">
+
+    <div class="differentials-col">
+      <p class="eyebrow reveal">Diferenciais</p>
+      <h2 class="section-title reveal">POR QUE TREINAR NA<br><span class="text-yellow">RECANTO FITNESS?</span></h2>
+      <p class="differentials-subtitle reveal">Mais do que equipamentos: uma estrutura pensada para sua evolução.</p>
+
+      <div class="diff-list" role="tablist" aria-label="Diferenciais da Recanto Fitness">
+
+        <div class="diff-item-wrap reveal">
+          <button class="diff-item is-active" type="button" role="tab" data-index="0" aria-selected="true" aria-controls="diff-visual">
+            <span class="diff-num">01</span>
+            <span class="diff-item-body">
+              <span class="diff-item-title">Estrutura Completa</span>
+              <span class="diff-item-desc">Equipamentos preparados para diferentes estilos e níveis de treino.</span>
+            </span>
+          </button>
+          <div class="diff-item-mobile-slot" data-slot="0"></div>
+        </div>
+
+        <div class="diff-item-wrap reveal">
+          <button class="diff-item" type="button" role="tab" data-index="1" aria-selected="false" aria-controls="diff-visual">
+            <span class="diff-num">02</span>
+            <span class="diff-item-body">
+              <span class="diff-item-title">Ambiente Motivador</span>
+              <span class="diff-item-desc">Um espaço desenvolvido para quem realmente quer evoluir.</span>
+            </span>
+          </button>
+          <div class="diff-item-mobile-slot" data-slot="1"></div>
+        </div>
+
+        <div class="diff-item-wrap reveal">
+          <button class="diff-item" type="button" role="tab" data-index="2" aria-selected="false" aria-controls="diff-visual">
+            <span class="diff-num">03</span>
+            <span class="diff-item-body">
+              <span class="diff-item-title">Equipamentos de Qualidade</span>
+              <span class="diff-item-desc">Treine com segurança, conforto e eficiência.</span>
+            </span>
+          </button>
+          <div class="diff-item-mobile-slot" data-slot="2"></div>
+        </div>
+
+        <div class="diff-item-wrap reveal">
+          <button class="diff-item" type="button" role="tab" data-index="3" aria-selected="false" aria-controls="diff-visual">
+            <span class="diff-num">04</span>
+            <span class="diff-item-body">
+              <span class="diff-item-title">Atendimento</span>
+              <span class="diff-item-desc">Equipe preparada para tornar sua experiência melhor.</span>
+            </span>
+          </button>
+          <div class="diff-item-mobile-slot" data-slot="3"></div>
+        </div>
+
+        <div class="diff-item-wrap reveal">
+          <button class="diff-item" type="button" role="tab" data-index="4" aria-selected="false" aria-controls="diff-visual">
+            <span class="diff-num">05</span>
+            <span class="diff-item-body">
+              <span class="diff-item-title">Horário Amplo</span>
+              <span class="diff-item-desc">Treine com liberdade em horários que cabem na sua rotina.</span>
+            </span>
+          </button>
+          <div class="diff-item-mobile-slot" data-slot="4"></div>
+        </div>
+
+        <div class="diff-item-wrap reveal">
+          <button class="diff-item" type="button" role="tab" data-index="5" aria-selected="false" aria-controls="diff-visual">
+            <span class="diff-num">06</span>
+            <span class="diff-item-body">
+              <span class="diff-item-title">Localização</span>
+              <span class="diff-item-desc">Fácil acesso para tornar o treino parte do seu dia.</span>
+            </span>
+          </button>
+          <div class="diff-item-mobile-slot" data-slot="5"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="differentials-visual-col reveal">
+      <div class="diff-visual" id="diff-visual">
+        <div class="diff-slide is-active" data-slide="0">
+          <img src="assets/img/musculacao-piso-grid.webp" alt="Estrutura completa da Recanto Fitness" loading="lazy">
+          <div class="diff-slide-overlay"></div>
+        </div>
+        <div class="diff-slide" data-slide="1">
+          <img src="assets/img/aula-fitball-2-grid.webp" alt="Ambiente motivador da Recanto Fitness" loading="lazy">
+          <div class="diff-slide-overlay"></div>
+        </div>
+        <div class="diff-slide" data-slide="2">
+          <img src="assets/img/pesos-livres-grid.webp" alt="Equipamentos de qualidade da Recanto Fitness" loading="lazy">
+          <div class="diff-slide-overlay"></div>
+        </div>
+        <div class="diff-slide" data-slide="3">
+          <img src="assets/img/atendimento-personal-grid.webp" alt="Atendimento da equipe Recanto Fitness" loading="lazy">
+          <div class="diff-slide-overlay"></div>
+        </div>
+        <div class="diff-slide" data-slide="4">
+          <img src="assets/img/equipe-recanto-full.webp" alt="Horários da Recanto Fitness" loading="lazy">
+          <div class="diff-slide-overlay diff-slide-overlay-strong"></div>
+          <div class="diff-slide-panel">
+            <span class="diff-slide-panel-big">06<small>h</small> — 23<small>h</small></span>
+            <span class="diff-slide-panel-label">Segunda a sexta</span>
+            <span class="diff-slide-panel-sub">Sábados e feriados: 08h às 14h</span>
+          </div>
+        </div>
+        <div class="diff-slide" data-slide="5">
+          <img src="assets/img/cardio-esteiras-grid.webp" alt="Localização da Recanto Fitness" loading="lazy">
+          <div class="diff-slide-overlay diff-slide-overlay-strong"></div>
+          <div class="diff-slide-panel">
+            <svg class="diff-slide-pin" width="22" height="28" viewBox="0 0 22 28" fill="none" aria-hidden="true">
+              <path d="M11 1C5.5 1 1 5.5 1 11c0 7.5 10 16 10 16s10-8.5 10-16c0-5.5-4.5-10-10-10Z" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="11" cy="11" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <span class="diff-slide-panel-big diff-slide-panel-big-sm">Zona Leste</span>
+            <span class="diff-slide-panel-label">Terceira Divisão — São Paulo, SP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 08 — SEÇÃO DE IMPACTO ============ -->
+<section class="impact">
+  <div class="impact-bg"><img src="assets/img/equipe-recanto-full.webp" alt="Equipe Recanto Fitness" loading="lazy"></div>
+  <div class="impact-overlay"></div>
+  <div class="container impact-content reveal">
+    <h2 class="impact-title">NÃO EXISTE<br>ATALHO PARA<br><span class="text-yellow">EVOLUÇÃO.</span></h2>
+    <p class="impact-sub">Existe treino. Disciplina. Consistência.</p>
+    <a href="#" class="btn btn-primary btn-lg" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">Comece Hoje</a>
+  </div>
+</section>
+
+<!-- ============ 09 — PLANOS ============ -->
+<section class="plans" id="planos">
+  <div class="plans-glow" aria-hidden="true"></div>
+  <div class="container">
+    <div class="plans-heading">
+      <p class="eyebrow reveal">Planos</p>
+      <h2 class="section-title reveal">ESCOLHA SEU PLANO.<br>COMECE SUA <span class="text-yellow">EVOLUÇÃO.</span></h2>
+      <p class="plans-subtitle reveal">Escolha a opção ideal para sua rotina e comece hoje mesmo.</p>
+    </div>
+
+    <div class="plans-grid">
+      <article class="plan-card reveal reveal-left">
+        <div class="plan-card-head">
+          <h3>Mensal</h3>
+          <p class="plan-blurb">Ideal para começar</p>
+        </div>
+        <p class="plan-price"><span class="plan-currency">R$</span><span class="plan-amount" data-price-target="59.90">0,00</span><small>/mês</small></p>
+        <ul class="plan-features">
+          <li>Acesso completo à estrutura</li>
+          <li>Horário livre</li>
+          <li>Sem fidelidade</li>
+        </ul>
+        <a href="#" class="btn btn-outline plan-cta" data-wa data-wa-msg="Olá! Tenho interesse no plano MENSAL da Recanto Fitness. Pode me passar mais informações?">Escolher Plano</a>
+      </article>
+
+      <article class="plan-card plan-featured reveal reveal-center">
+        <span class="plan-tag">Mais Escolhido</span>
+        <div class="plan-card-head">
+          <h3>Trimestral</h3>
+          <p class="plan-blurb">Melhor custo-benefício</p>
+        </div>
+        <p class="plan-price"><span class="plan-currency">R$</span><span class="plan-amount" data-price-target="69.90">0,00</span><small>/mês</small></p>
+        <ul class="plan-features">
+          <li>Acesso completo à estrutura</li>
+          <li>Horário livre</li>
+          <li>Melhor custo-benefício</li>
+          <li>Mais vantagem na continuidade</li>
+        </ul>
+        <a href="#" class="btn btn-primary plan-cta" data-wa data-wa-msg="Olá! Tenho interesse no plano TRIMESTRAL da Recanto Fitness. Pode me passar mais informações?">Quero Esse Plano</a>
+        <p class="plan-note">Ideal para quem quer consistência e melhor custo-benefício.</p>
+      </article>
+
+      <article class="plan-card reveal reveal-right">
+        <div class="plan-card-head">
+          <h3>Anual</h3>
+          <p class="plan-blurb">Mais compromisso com sua evolução</p>
+        </div>
+        <p class="plan-price"><span class="plan-currency">R$</span><span class="plan-amount" data-price-target="79.90">0,00</span><small>/mês</small></p>
+        <ul class="plan-features">
+          <li>Acesso completo à estrutura</li>
+          <li>Horário livre</li>
+          <li>Melhor compromisso com resultado</li>
+          <li>Mais tempo para evoluir</li>
+        </ul>
+        <a href="#" class="btn btn-outline plan-cta" data-wa data-wa-msg="Olá! Tenho interesse no plano ANUAL da Recanto Fitness. Pode me passar mais informações?">Escolher Plano</a>
+      </article>
+    </div>
+
+    <p class="plans-reinforce reveal">Mais do que um plano: um ambiente preparado para sua evolução.</p>
+    <p class="numbers-note">* Valores ilustrativos — substituir pelos preços reais da Recanto Fitness.</p>
+  </div>
+</section>
+
+<!-- ============ 10 — GALERIA / ESTRUTURA (apresentação editorial) ============ -->
+<section class="showcase">
+
+  <div class="showcase-block showcase-cover">
+    <div class="showcase-media parallax-img"><img src="assets/img/musculacao-piso-full.webp" alt="Estrutura completa da Recanto Fitness" loading="lazy"></div>
+    <div class="showcase-cover-overlay"></div>
+    <div class="showcase-cover-copy">
+      <p class="eyebrow">Estrutura</p>
+      <h2 class="showcase-title">CONHEÇA A<br><span class="text-yellow">RECANTO FITNESS</span></h2>
+      <p class="showcase-text">Ambiente, equipamentos e espaços preparados para quem leva evolução a sério.</p>
+    </div>
+  </div>
+
+  <div class="showcase-block showcase-split">
+    <div class="showcase-info">
+      <span class="showcase-num">01</span>
+      <h3>Musculação</h3>
+      <p>Máquinas e pesos livres organizados para treinos completos, do iniciante ao avançado.</p>
+    </div>
+    <div class="showcase-collage">
+      <div class="showcase-media showcase-media-main parallax-img"><img src="assets/img/pesos-livres-full.webp" alt="Área de musculação e pesos livres da Recanto Fitness" loading="lazy"></div>
+      <div class="showcase-media showcase-media-accent parallax-img"><img src="assets/img/atendimento-personal-grid.webp" alt="Atendimento personalizado na Recanto Fitness" loading="lazy"></div>
+    </div>
+  </div>
+
+  <div class="showcase-block showcase-split showcase-reverse">
+    <div class="showcase-collage showcase-collage-single">
+      <div class="showcase-media parallax-img"><img src="assets/img/cardio-esteiras-full.webp" alt="Equipamentos de cardio da Recanto Fitness" loading="lazy"></div>
+    </div>
+    <div class="showcase-info">
+      <span class="showcase-num">02</span>
+      <h3>Equipamentos</h3>
+      <p>Esteiras, bikes e tecnologia com manutenção constante para treinar com segurança.</p>
+    </div>
+  </div>
+
+  <div class="showcase-block showcase-cover showcase-wide">
+    <div class="showcase-media parallax-img"><img src="assets/img/aula-fitball-1-full.webp" alt="Ambiente e aulas em grupo na Recanto Fitness" loading="lazy"></div>
+    <div class="showcase-cover-overlay showcase-overlay-right"></div>
+    <div class="showcase-tag">
+      <span class="showcase-num">03</span>
+      <h3>Ambiente</h3>
+    </div>
+  </div>
+
+</section>
+</section>
+
+<!-- ============ 11 — DEPOIMENTOS ============ -->
+<section class="testimonials" id="depoimentos">
+  <div class="container">
+    <p class="eyebrow reveal">Depoimentos</p>
+    <h2 class="section-title reveal">QUEM TREINA<br><span class="text-yellow">SABE A DIFERENÇA.</span></h2>
+
+    <a class="rating-badge reveal" href="https://www.google.com/maps/search/?api=1&query=Recanto+Fitness+Avenida+Bento+Guelfi+2662+S%C3%A3o+Paulo" target="_blank" rel="noopener">
+      <span class="rating-stars">★★★★★</span>
+      <span class="rating-value">4,6</span>
+      <span class="rating-count">· 29 avaliações no Google</span>
+    </a>
+
+    <div class="testimonials-grid">
+      <article class="testimonial-card reveal">
+        <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <p class="testimonial-text">"Ótimo lugar para treinos, sempre supervisionado pelos instrutores, ótima estrutura. Instrutores qualificados... Qualidade no atendimento."</p>
+        <p class="testimonial-name">Debora Viginio</p>
+      </article>
+      <article class="testimonial-card reveal">
+        <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <p class="testimonial-text">"A academia é ótima, amo as aulas de fitdance ❤️"</p>
+        <p class="testimonial-name">Jade Gomes</p>
+      </article>
+      <article class="testimonial-card reveal">
+        <div class="stars" aria-label="5 de 5 estrelas">★★★★★</div>
+        <p class="testimonial-text">"Uma equipe maravilhosa. Super recomendo..."</p>
+        <p class="testimonial-name">Eliane Gundin.</p>
+      </article>
+    </div>
+    <p class="numbers-note">* Avaliações reais de alunos publicadas no Google. <a href="https://www.google.com/maps/search/?api=1&query=Recanto+Fitness+Avenida+Bento+Guelfi+2662+S%C3%A3o+Paulo" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Ver todas no Google →</a></p>
+  </div>
+</section>
+
+<!-- ============ 12 — HORÁRIOS ============ -->
+<section class="hours">
+  <div class="container hours-grid">
+    <h2 class="section-title reveal">TREINE NO SEU <span class="text-yellow">HORÁRIO.</span></h2>
+    <div class="hours-list reveal">
+      <div class="hours-item">
+        <h3>Segunda a Sexta</h3>
+        <p class="hours-time">06h <span class="text-yellow">às</span> 23h</p>
+      </div>
+      <div class="hours-item">
+        <h3>Sábados e Feriados</h3>
+        <p class="hours-time">08h <span class="text-yellow">às</span> 14h</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13 — LOCALIZAÇÃO ============ -->
+<section class="location" id="localizacao">
+  <div class="container">
+    <p class="eyebrow reveal">Localização</p>
+    <h2 class="section-title reveal">A RECANTO FITNESS<br>ESTÁ <span class="text-yellow">PERTO DE VOCÊ.</span></h2>
+
+    <div class="location-facade reveal">
+      <img src="assets/img/fachada-grid.webp" alt="Fachada da Recanto Fitness na Avenida Bento Guelfi" loading="lazy">
+      <div class="location-facade-overlay"></div>
+      <span class="location-facade-tag">Recanto Fitness — Av. Bento Guelfi, 2662</span>
+    </div>
+
+    <div class="location-grid">
+      <div class="location-info reveal">
+        <h3>Recanto Fitness</h3>
+        <p>Avenida Bento Guelfi, 2662<br>Terceira Divisão — Jardim da Laranjeira, Zona Leste<br>São Paulo - SP<br>CEP 08381-001</p>
+        <p><strong>Telefone:</strong> <a href="tel:+5511993053083">(11) 99305-3083</a></p>
+        <p><strong>WhatsApp:</strong> <a href="#" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">(11) 94031-2343</a></p>
+        <p><strong>Horários:</strong> Seg. a sex. 06h–23h · Sáb. e feriados 08h–14h</p>
+        <div class="location-actions">
+          <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=Avenida+Bento+Guelfi%2C+2662+-+Terceira+Divis%C3%A3o%2C+S%C3%A3o+Paulo+-+SP%2C+08381-001" target="_blank" rel="noopener">Como Chegar</a>
+          <a class="btn btn-outline" href="#" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">Falar no WhatsApp</a>
+        </div>
+      </div>
+      <div class="location-map reveal">
+        <iframe
+          src="https://www.google.com/maps?q=Avenida+Bento+Guelfi,+2662+-+Terceira+Divis%C3%A3o,+S%C3%A3o+Paulo+-+SP,+08381-001&output=embed"
+          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa de localização da Recanto Fitness"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14 — CONTATO ============ -->
+<section class="contact">
+  <div class="container">
+    <p class="eyebrow reveal">Contato</p>
+    <h2 class="section-title reveal">FALE COM A <span class="text-yellow">RECANTO FITNESS.</span></h2>
+
+    <div class="contact-grid">
+      <a class="contact-item reveal" href="#" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">
+        <span class="contact-label">WhatsApp</span>
+        <span class="contact-value">(11) 94031-2343</span>
+      </a>
+      <a class="contact-item reveal" href="tel:+5511993053083">
+        <span class="contact-label">Telefone</span>
+        <span class="contact-value">(11) 99305-3083</span>
+      </a>
+      <a class="contact-item reveal" href="mailto:rftrecantofitness@gmail.com">
+        <span class="contact-label">E-mail</span>
+        <span class="contact-value">rftrecantofitness@<wbr>gmail.com</span>
+      </a>
+      <a class="contact-item reveal" href="https://www.instagram.com/recanto_fitness" target="_blank" rel="noopener">
+        <span class="contact-label">Instagram</span>
+        <span class="contact-value">@recanto_fitness</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 15 — CTA FINAL ============ -->
+<section class="cta-final">
+  <div class="cta-final-bg"><img src="assets/img/aula-fitball-2-full.webp" alt="Aula em grupo na Recanto Fitness" loading="lazy"></div>
+  <div class="cta-final-overlay"></div>
+  <div class="container cta-final-content reveal">
+    <h2 class="impact-title">VOCÊ NÃO PRECISA<br>ESPERAR <span class="text-yellow">SEGUNDA-FEIRA.</span></h2>
+    <p class="impact-sub">Seu próximo treino pode ser o começo de uma nova fase.</p>
+    <a href="#" class="btn btn-primary btn-lg" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">Começar Agora</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 16 — FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <p class="logo">RECANTO<span>FITNESS</span></p>
+      <p>Avenida Bento Guelfi, 2662<br>Terceira Divisão — Jardim da Laranjeira, Zona Leste<br>São Paulo - SP<br>CEP 08381-001</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <p><a href="#" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">WhatsApp: (11) 94031-2343</a></p>
+      <p><a href="tel:+5511993053083">Telefone: (11) 99305-3083</a></p>
+      <p><a href="mailto:rftrecantofitness@gmail.com">rftrecantofitness@gmail.com</a></p>
+      <p><a href="https://www.instagram.com/recanto_fitness" target="_blank" rel="noopener">@recanto_fitness</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Horários</h4>
+      <p>Segunda a sexta: 06h às 23h</p>
+      <p>Sábados e feriados: 08h às 14h</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <p><a href="#inicio">Início</a></p>
+      <p><a href="#academia">Academia</a></p>
+      <p><a href="#estrutura">Estrutura</a></p>
+      <p><a href="#planos">Planos</a></p>
+      <p><a href="#localizacao">Localização</a></p>
+      <p><a href="#" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia.">Contato</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Recanto Fitness. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<!-- ============ WHATSAPP FLUTUANTE ============ -->
+<a href="#" class="wa-float" data-wa data-wa-msg="Olá! Vi o site da Recanto Fitness e gostaria de saber mais sobre os planos e valores da academia." aria-label="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.85 9.85 0 0 0 12.04 2Zm5.8 14.02c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.62-.6-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.93 0-1.4.73-2.08 1-2.37.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.64.77 1.92.91.28.14.47.21.54.33.07.12.07.68-.17 1.36Z"/></svg>
+</a>
+
+<script src="js/app.js"></script>
+</body>
+</html>

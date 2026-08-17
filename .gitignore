@@ -1,0 +1,24 @@
+# Environment
+.env
+
+# Raw/unprocessed source uploads (optimized versions live in assets/)
+*.jpg
+*.jpeg
+*.png
+!assets/**/*.jpg
+!assets/**/*.jpeg
+!assets/**/*.png
+*.mp4
+*.mov
+!assets/**/*.mp4
+!assets/**/*.mov
+
+# Tooling/skills artifacts not part of the deployed site
+.claude/
+brand-assets/
+projects/
+scripts/
+
+# OS junk
+Thumbs.db
+.DS_Store
