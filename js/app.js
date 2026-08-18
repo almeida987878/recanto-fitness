@@ -362,6 +362,10 @@
     }
 
     function setActive(index) {
+      // Same redundant-triple-firing guard as wireAulas below (mouseenter +
+      // focus + click all call this per click) — still re-place/measure the
+      // mobile panel even for a same-index call.
+      if (index === activeIndex) { placeVisualPanel(); return; }
       activeIndex = index;
 
       items.forEach((el, i) => {
@@ -417,23 +421,37 @@
     const mobileQuery = window.matchMedia('(max-width: 1024px)');
     let activeIndex = -1;
 
-    // The Pilates slide is a real muted video, not a photo — only play it
-    // while its slide is actually the active one (saves bandwidth/battery
-    // for the other 7 slides that never need it), and pause it entirely once
-    // the whole section scrolls out of view.
-    const pilatesVideo = section.querySelector('.aula-slide-video');
-    const pilatesSlide = pilatesVideo ? pilatesVideo.closest('.aula-slide') : null;
-    const pilatesIndex = pilatesSlide ? slides.indexOf(pilatesSlide) : -1;
-    const tryPlayPilates = pilatesVideo ? setupAutoplay(pilatesVideo) : null;
-    if (pilatesVideo) pilatesVideo.pause(); // setupAutoplay() attempts an initial play; only the active slide should run
+    // Some slides (Jump, Fit Dance, Pilates, Bike) are real muted videos, not
+    // photos — each only plays while its own slide is the active one (saves
+    // bandwidth/battery for whichever of the 8 slides aren't showing), and
+    // all of them pause once the whole section scrolls out of view.
+    //
+    // Deliberately NOT using the shared setupAutoplay() helper here: its
+    // window-level scroll/click/touchstart retry listeners are meant for a
+    // single page-load video fighting an autoplay block. With up to 4 of
+    // these videos alive at once, those broad listeners cross-fire on any
+    // page scroll (e.g. scrolling to reach a lower list item) and race with
+    // setActive()'s own play/pause calls — a real bug caught in testing, not
+    // just theoretical. A click/hover selecting a slide is itself the user
+    // gesture that makes play() reliable, so no retry plumbing is needed.
+    const slideVideos = slides.map((slide) => {
+      const video = slide.querySelector('.aula-slide-video');
+      if (!video) return null;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      const tryPlay = () => video.play().catch(() => {});
+      return { video, tryPlay };
+    });
 
-    if (pilatesVideo && 'IntersectionObserver' in window) {
+    if (slideVideos.some(Boolean) && 'IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (activeIndex === pilatesIndex) tryPlayPilates();
+            const active = slideVideos[activeIndex];
+            if (active) active.tryPlay();
           } else {
-            pilatesVideo.pause();
+            slideVideos.forEach((sv) => { if (sv) sv.video.pause(); });
           }
         });
       }, { threshold: 0.05 });
@@ -463,6 +481,14 @@
     }
 
     function setActive(index) {
+      // A single click on a <button> fires mouseenter, focus AND click in
+      // quick succession — all three are wired to setActive(i) with the same
+      // index, so without this guard every click re-runs the whole function
+      // (and every video's play()/pause()) three times over a few ms, which
+      // raced badly in testing. Placing/measuring the mobile panel is the
+      // one thing worth re-running even for a same-index call (e.g. after a
+      // resize), so that part happens either way.
+      if (index === activeIndex) { placeVisualPanel(); return; }
       activeIndex = index;
 
       items.forEach((el, i) => {
@@ -473,14 +499,15 @@
       wraps.forEach((el, i) => el.classList.toggle('is-open', i === index));
       slides.forEach((el, i) => el.classList.toggle('is-active', i === index));
 
-      if (pilatesVideo) {
-        if (index === pilatesIndex) {
-          if (pilatesVideo.preload === 'none') pilatesVideo.preload = 'auto';
-          tryPlayPilates();
+      slideVideos.forEach((sv, i) => {
+        if (!sv) return;
+        if (i === index) {
+          if (sv.video.preload === 'none') sv.video.preload = 'auto';
+          sv.tryPlay();
         } else {
-          pilatesVideo.pause();
+          sv.video.pause();
         }
-      }
+      });
 
       placeVisualPanel();
     }
