@@ -615,6 +615,45 @@
     armAutoplay();
   }
 
+  /* ---------- FAQ: single-open accordion ---------- */
+  function wireFaq() {
+    const items = Array.from(document.querySelectorAll('.faq-item'));
+    if (!items.length) return;
+
+    function close(item) {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      item.classList.remove('is-open');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+      if (answer) answer.style.maxHeight = '0px';
+    }
+    function open(item) {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      item.classList.add('is-open');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+      if (answer) answer.style.maxHeight = `${answer.scrollHeight}px`;
+    }
+
+    items.forEach((item) => {
+      const btn = item.querySelector('.faq-question');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const wasOpen = item.classList.contains('is-open');
+        items.forEach(close);
+        if (!wasOpen) open(item);
+      });
+    });
+
+    // A resize (e.g. rotating a phone, or text reflowing at a new
+    // breakpoint) can change the open answer's content height — keep the
+    // max-height in sync instead of clipping or leaving a gap.
+    window.addEventListener('resize', () => {
+      const openItem = items.find((item) => item.classList.contains('is-open'));
+      if (openItem) open(openItem);
+    }, { passive: true });
+  }
+
   /* ---------- Scroll reveal ---------- */
   function wireReveal() {
     const items = document.querySelectorAll('.reveal');
@@ -667,42 +706,6 @@
     els.forEach((el) => io.observe(el));
   }
 
-  /* ---------- Plan prices: count up from 0 with a BRL-style "59,90" format ---------- */
-  function wirePlanPrices() {
-    const els = document.querySelectorAll('[data-price-target]');
-    if (!els.length) return;
-
-    const format = (v) => v.toFixed(2).replace('.', ',');
-
-    const animate = (el) => {
-      const target = parseFloat(el.getAttribute('data-price-target'));
-      if (isNaN(target)) return;
-      const duration = 1200;
-      const start = performance.now();
-      function tick(now) {
-        const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = format(target * eased);
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    };
-
-    if (!('IntersectionObserver' in window)) {
-      els.forEach((el) => { el.textContent = format(parseFloat(el.getAttribute('data-price-target')) || 0); });
-      return;
-    }
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animate(entry.target);
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.4 });
-    els.forEach((el) => io.observe(el));
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
     wireWhatsAppLinks();
     wireMobileMenu();
@@ -713,8 +716,8 @@
     wireShowcaseParallax();
     wireDifferentials();
     wireAulas();
+    wireFaq();
     wireReveal();
     wireCounters();
-    wirePlanPrices();
   });
 })();
