@@ -986,10 +986,6 @@ a { color: inherit; text-decoration: none; }
 .plan-currency { font-family: var(--font-display); font-size: 1.1rem; color: var(--yellow); }
 .plan-amount { font-family: var(--font-display); font-size: 3rem; color: var(--yellow); line-height: 1; }
 .plan-price small { font-family: var(--font-body); font-size: 0.9rem; color: var(--gray); font-weight: 600; margin-left: 2px; }
-/* Real prices aren't defined yet — an honest placeholder beats a fake
-   number. Smaller + dashed instead of the solid confident numeral makes it
-   unmistakably "fill this in later", not just a small price. */
-.plan-amount-placeholder { font-size: 1.5rem; letter-spacing: 0.04em; border-bottom: 2px dashed rgba(255,196,0,0.45); padding-bottom: 3px; }
 
 .plan-features { list-style: none; margin-bottom: 34px; display: flex; flex-direction: column; gap: 12px; }
 .plan-features li { position: relative; padding-left: 26px; color: var(--gray); font-size: 0.92rem; }

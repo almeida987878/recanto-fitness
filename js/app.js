@@ -706,6 +706,42 @@
     els.forEach((el) => io.observe(el));
   }
 
+  /* ---------- Plan prices: count up from 0 with a BRL-style "59,90" format ---------- */
+  function wirePlanPrices() {
+    const els = document.querySelectorAll('[data-price-target]');
+    if (!els.length) return;
+
+    const format = (v) => v.toFixed(2).replace('.', ',');
+
+    const animate = (el) => {
+      const target = parseFloat(el.getAttribute('data-price-target'));
+      if (isNaN(target)) return;
+      const duration = 1200;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = format(target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      els.forEach((el) => { el.textContent = format(parseFloat(el.getAttribute('data-price-target')) || 0); });
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    els.forEach((el) => io.observe(el));
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     wireWhatsAppLinks();
     wireMobileMenu();
@@ -719,5 +755,6 @@
     wireFaq();
     wireReveal();
     wireCounters();
+    wirePlanPrices();
   });
 })();
