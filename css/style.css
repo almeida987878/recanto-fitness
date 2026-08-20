@@ -365,7 +365,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================
-   04 — AULAS (showcase premium)
+   04 — AULAS (carrossel premium)
    ============================================ */
 .aulas { position: relative; background: var(--black-2); padding: 140px 0; overflow: hidden; }
 
@@ -384,39 +384,58 @@ a { color: inherit; text-decoration: none; }
   z-index: 0;
 }
 
+/* Named grid areas (rather than DOM order/CSS `order`) so the intro copy,
+   the numbered nav, the media card and the bottom CTA can be freely
+   rearranged between the 2-column desktop layout and the stacked mobile
+   layout without ever reordering the actual DOM. */
 .aulas-grid {
   position: relative;
   z-index: 1;
   display: grid;
   grid-template-columns: 0.95fr 1.15fr;
-  gap: 70px;
+  grid-template-areas:
+    "intro  visual"
+    "nav    visual"
+    "cta    visual";
+  column-gap: 70px;
+  row-gap: 30px;
   align-items: start;
 }
+.aulas-intro { grid-area: intro; }
+/* min-width: 0 overrides the grid item's default min-width:auto, which
+   would otherwise size this track to fit the nav's full (unscrolled)
+   content width — the classic "flex/grid child with an overflow-x:auto
+   descendant blows out its container" trap, very visible once the nav
+   becomes a horizontal drag strip on mobile. */
+.aula-nav-wrap { grid-area: nav; min-width: 0; }
+.aulas-visual-col { grid-area: visual; }
+.aulas-cta { grid-area: cta; }
 
-.aulas-subtitle { color: var(--gray); font-size: 1.05rem; max-width: 46ch; margin-bottom: 40px; }
+.aulas-subtitle { color: var(--gray); font-size: 1.05rem; max-width: 46ch; }
 
-.aula-list { display: flex; flex-direction: column; }
-.aula-item-wrap { border-top: 1px solid rgba(245,245,245,0.1); }
-.aula-list .aula-item-wrap:last-child { border-bottom: 1px solid rgba(245,245,245,0.1); }
-
-.aula-item {
+/* ---- Numbered nav: selects the active modality ---- */
+.aula-nav { display: flex; flex-direction: column; }
+.aula-nav-item {
   width: 100%;
   display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: 20px;
-  align-items: start;
-  padding: 24px 4px;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 4px;
   background: none;
   border: none;
+  border-top: 1px solid rgba(245,245,245,0.1);
   cursor: pointer;
   text-align: left;
   font: inherit;
   color: inherit;
   position: relative;
+  transition: transform .35s var(--ease);
 }
-.aula-item::before {
+.aula-nav-item:last-child { border-bottom: 1px solid rgba(245,245,245,0.1); }
+.aula-nav-item::before {
   content: '';
-  position: absolute; left: -22px; top: 8px; bottom: 8px;
+  position: absolute; left: -22px; top: 10px; bottom: 10px;
   width: 3px;
   background: var(--yellow);
   border-radius: 2px;
@@ -424,119 +443,140 @@ a { color: inherit; text-decoration: none; }
   transform-origin: top;
   transition: transform .45s var(--ease);
 }
-.aula-item.is-active::before { transform: scaleY(1); }
+.aula-nav-item.is-active::before { transform: scaleY(1); }
+.aula-nav-item:hover:not(.is-active) { transform: translateX(6px); }
 
-.aula-num {
+.aula-nav-num {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 1;
   color: rgba(255,196,0,0.35);
-  transition: color .4s var(--ease), transform .4s var(--ease);
+  transition: color .35s var(--ease), transform .35s var(--ease);
 }
-.aula-item.is-active .aula-num,
-.aula-item:hover .aula-num { color: var(--yellow); }
-.aula-item.is-active .aula-num { transform: scale(1.08); }
+.aula-nav-item.is-active .aula-nav-num,
+.aula-nav-item:hover .aula-nav-num { color: var(--yellow); }
+.aula-nav-item.is-active .aula-nav-num { transform: scale(1.08); }
 
-.aula-item-body { display: block; opacity: .6; transition: opacity .4s var(--ease); }
-.aula-item.is-active .aula-item-body,
-.aula-item:hover .aula-item-body { opacity: 1; }
-
-.aula-item-title {
-  display: block;
-  font-size: 1.1rem;
+.aula-nav-title {
+  font-size: 1.05rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: var(--gray);
-  transition: color .4s var(--ease), transform .4s var(--ease);
+  transition: color .35s var(--ease), transform .35s var(--ease);
 }
-.aula-item.is-active .aula-item-title,
-.aula-item:hover .aula-item-title { color: var(--white); }
-.aula-item.is-active .aula-item-title { transform: translateX(4px); }
+.aula-nav-item.is-active .aula-nav-title,
+.aula-nav-item:hover .aula-nav-title { color: var(--white); }
+.aula-nav-item.is-active .aula-nav-title { transform: translateX(4px); }
 
-.aula-item-desc {
-  display: block;
+/* Autoplay progress: a thin bar that fills under the active item and resets
+   on every switch — pure visual feedback, not literally required for the
+   carousel to work, but it's what makes autoplay read as intentional rather
+   than the section just randomly changing on its own. */
+.aula-nav-progress {
+  grid-column: 2;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255,255,255,.08);
+  overflow: hidden;
   max-height: 0;
   opacity: 0;
-  overflow: hidden;
-  color: var(--gray);
-  font-size: 0.9rem;
-  max-width: 48ch;
-  transition: max-height .45s var(--ease), opacity .4s var(--ease), margin-top .45s var(--ease);
+  margin-top: 0;
+  transition: opacity .3s var(--ease), max-height .3s var(--ease), margin-top .3s var(--ease);
 }
-.aula-item.is-active .aula-item-desc { max-height: 90px; opacity: 1; margin-top: 8px; }
-
-.aula-item-mobile-slot { display: none; }
+.aula-nav-item.is-active .aula-nav-progress { max-height: 2px; opacity: 1; margin-top: 10px; }
+.aula-nav-progress-fill { display: block; height: 100%; width: 0; background: var(--yellow); border-radius: 2px; }
+.aula-nav-progress-fill.is-autoplaying { animation-name: aulaNavFill; animation-timing-function: linear; animation-fill-mode: forwards; }
+@keyframes aulaNavFill { from { width: 0; } to { width: 100%; } }
 
 .aulas-cta {
-  margin-top: 48px;
-  padding-top: 36px;
+  padding-top: 6px;
   border-top: 1px solid rgba(255,255,255,0.08);
 }
 .aulas-cta-label { font-family: var(--font-display); font-size: 1.3rem; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
 .aulas-cta-text { color: var(--gray); font-size: 0.94rem; max-width: 42ch; margin-bottom: 22px; }
 
-/* ---- Visual panel: showcase vitrine for the active class ---- */
+/* ---- Media card: full-bleed photo/video for the active modality ---- */
 .aulas-visual-col { position: sticky; top: 100px; align-self: start; }
-.aula-visual {
+.aula-card {
   position: relative;
   aspect-ratio: 3/4;
   border-radius: 20px;
   overflow: hidden;
   background: var(--graphite);
   box-shadow: 0 40px 100px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.05);
+  isolation: isolate;
+  touch-action: pan-y;
 }
 /* Fine yellow corner accents — a sporty, editorial detail, not a border. */
-.aula-visual::before,
-.aula-visual::after {
+.aula-card::before,
+.aula-card::after {
   content: '';
   position: absolute;
   width: 34px; height: 34px;
   border: 2px solid var(--yellow);
-  z-index: 3;
+  z-index: 6;
   opacity: 0.85;
   pointer-events: none;
 }
-.aula-visual::before { top: 22px; left: 22px; border-right: none; border-bottom: none; }
-.aula-visual::after { bottom: 22px; right: 22px; border-left: none; border-top: none; }
+.aula-card::before { top: 22px; left: 22px; border-right: none; border-bottom: none; }
+.aula-card::after { bottom: 22px; right: 22px; border-left: none; border-top: none; }
 
+.aula-slides { position: absolute; inset: 0; }
+
+/* Each slide crossfades + settles from a slight zoom (opacity/transform) AND
+   wipes in laterally via clip-path — combining both is what keeps the swap
+   from reading as a generic crossfade. entering-next/entering-prev set the
+   *starting* clip (applied a frame before .is-active so there's something to
+   transition from); direction is decided in JS from how the user navigated. */
 .aula-slide {
   position: absolute; inset: 0;
   opacity: 0;
-  transform: scale(1.08);
-  filter: blur(6px);
-  transition: opacity .7s var(--ease), transform 1s var(--ease), filter .6s var(--ease);
+  transform: scale(1.05);
+  clip-path: inset(0 0 0 0);
+  transition: opacity .55s var(--ease), transform 1s var(--ease), clip-path .85s var(--ease);
+  z-index: 1;
+  pointer-events: none;
 }
-.aula-slide.is-active { opacity: 1; transform: scale(1); filter: blur(0); }
-.aula-slide img, .aula-slide-video { width: 100%; height: 100%; object-fit: cover; }
+.aula-slide.is-active { opacity: 1; transform: scale(1); z-index: 2; pointer-events: auto; }
+/* Bumped above the outgoing slide only while the wipe is in flight, so the
+   reveal is visible instead of being hidden underneath by DOM/source order. */
+.aula-slide.is-top { z-index: 5; }
+.aula-slide.entering-next { clip-path: inset(0 0 0 100%); }
+.aula-slide.entering-prev { clip-path: inset(0 100% 0 0); }
+
+.aula-slide-video, .aula-slide img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .8s var(--ease);
+}
+.aula-card:hover .aula-slide.is-active .aula-slide-video,
+.aula-card:hover .aula-slide.is-active img { transform: scale(1.05); }
+
 .aula-slide-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(8,8,8,.05) 0%, rgba(8,8,8,.35) 55%, rgba(8,8,8,.94) 100%);
 }
 
-/* Slides without a real photo (HIIT, Combat, GAP): bold typographic panel
-   with a giant faded word instead of a mismatched stock image — same trick
-   used for Horário/Localização in the Diferenciais section. */
-.aula-slide-panel {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  background:
-    radial-gradient(circle at 50% 38%, rgba(255,196,0,0.16) 0%, rgba(255,196,0,0) 60%),
-    linear-gradient(180deg, var(--graphite) 0%, var(--black-2) 100%);
+/* Hover-reveal secondary CTA — only shown for the active slide, so it can't
+   accidentally sit on top of a slide mid-transition. */
+.aula-slide-more {
+  position: absolute; top: 26px; right: 26px; z-index: 4;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--black);
+  background: var(--yellow);
+  border-radius: 999px;
+  text-decoration: none;
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
 }
-.aula-slide-panel-word {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2.6rem, 6vw, 4.4rem);
-  color: rgba(255,196,0,0.5);
-  line-height: 1;
-  letter-spacing: 0.02em;
-}
+.aula-card:hover .aula-slide.is-active .aula-slide-more { opacity: 1; transform: none; }
 
-/* Editorial content anchored at the base of the panel: tags → name → phrase. */
+/* Editorial content anchored at the base of the card: tags → name → phrase → CTA. */
 .aula-slide-content {
   position: absolute; left: 0; right: 0; bottom: 0;
-  z-index: 2;
+  z-index: 3;
   padding: 36px 34px 34px;
 }
 .aula-tags { display: flex; gap: 10px; margin-bottom: 16px; }
@@ -560,7 +600,38 @@ a { color: inherit; text-decoration: none; }
   color: var(--white);
   margin-bottom: 12px;
 }
-.aula-slide-phrase { color: var(--gray); font-size: 0.95rem; max-width: 34ch; }
+.aula-slide-phrase { color: var(--gray); font-size: 0.95rem; max-width: 34ch; margin-bottom: 22px; }
+.aula-slide-cta { position: relative; z-index: 3; }
+
+/* Discreet prev/next arrows — quiet by default, confident on hover. */
+.aula-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(8,8,8,.35);
+  backdrop-filter: blur(6px);
+  color: var(--white);
+  cursor: pointer;
+  z-index: 6;
+  opacity: 0;
+  transition: opacity .35s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
+}
+.aula-card:hover .aula-arrow { opacity: 1; }
+.aula-arrow:hover { background: var(--yellow); border-color: var(--yellow); color: var(--black); }
+.aula-arrow-prev { left: 18px; }
+.aula-arrow-next { right: 18px; }
+
+.aula-card-progress {
+  position: absolute; right: 26px; bottom: 26px; z-index: 7;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,.55);
+  pointer-events: none;
+}
+.aula-card-progress-current { color: var(--yellow); }
 
 /* ============================================
    05 — SOBRE
@@ -1145,13 +1216,6 @@ a { color: inherit; text-decoration: none; }
 .plans-grid .reveal:nth-child(3) { transition-delay: .2s; }
 .testimonials-grid .reveal:nth-child(2) { transition-delay: .1s; }
 .testimonials-grid .reveal:nth-child(3) { transition-delay: .2s; }
-.aula-list .reveal:nth-child(2) { transition-delay: .05s; }
-.aula-list .reveal:nth-child(3) { transition-delay: .10s; }
-.aula-list .reveal:nth-child(4) { transition-delay: .15s; }
-.aula-list .reveal:nth-child(5) { transition-delay: .20s; }
-.aula-list .reveal:nth-child(6) { transition-delay: .25s; }
-.aula-list .reveal:nth-child(7) { transition-delay: .30s; }
-.aula-list .reveal:nth-child(8) { transition-delay: .35s; }
 .aulas-visual-col.reveal { transform: scale(0.96) translateY(20px); }
 .contact-grid .reveal:nth-child(2) { transition-delay: .08s; }
 .contact-grid .reveal:nth-child(3) { transition-delay: .16s; }
@@ -1212,32 +1276,59 @@ a { color: inherit; text-decoration: none; }
     box-shadow: none;
   }
 
-  /* Aulas: same accordion pattern as Diferenciais (see wireAulas in app.js). */
-  .aulas-grid { grid-template-columns: 1fr; gap: 0; }
-  .aulas-visual-col { display: none; }
-  .aula-item { grid-template-columns: 52px 1fr; padding: 22px 4px; }
-  .aula-item::before { left: -22px; }
-  .aula-item-mobile-slot {
-    display: block;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .5s var(--ease);
+  /* Aulas carousel: stack the grid areas into a single column — intro copy,
+     then the nav (which itself flips to a horizontal drag/scroll strip),
+     then the media card, then the closing CTA (see wireAulas in app.js for
+     the drag/swipe/autoplay behaviour, which is viewport-agnostic — only
+     the layout changes here). */
+  .aulas-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "intro" "nav" "visual" "cta";
+    row-gap: 26px;
   }
-  .aula-item-mobile-slot .aula-visual {
-    margin: 18px 0 6px;
-    aspect-ratio: 16/10;
-    box-shadow: none;
+  .aulas-visual-col { position: relative; top: 0; }
+  .aula-card { aspect-ratio: 4/5; }
+
+  .aula-nav {
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 2px 6px;
+    margin: 0 -2px;
+    scrollbar-width: none;
   }
-  /* The shorter 16:10 mobile panel leaves little headroom above the
-     bottom-anchored name/phrase — push the giant background word (photo-less
-     slides) up out of its way instead of centering it. */
-  .aula-item-mobile-slot .aula-slide-panel { align-items: flex-start; padding-top: 18px; }
-  .aula-item-mobile-slot .aula-slide-panel-word { font-size: 1.6rem; }
-  .aula-item-mobile-slot .aula-slide-content { padding: 16px 18px; }
-  .aula-item-mobile-slot .aula-slide-name { font-size: 1.6rem; margin-bottom: 6px; }
-  .aula-item-mobile-slot .aula-slide-phrase { font-size: 0.82rem; }
-  .aula-item-mobile-slot .aula-tags { margin-bottom: 8px; }
-  .aula-item-mobile-slot .aula-tag { font-size: 0.62rem; padding: 4px 10px; }
+  .aula-nav::-webkit-scrollbar { display: none; }
+  .aula-nav-item {
+    width: auto;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    padding: 12px 18px;
+    border: 1px solid rgba(245,245,245,.16);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .aula-nav-item:last-child { border-bottom: 1px solid rgba(245,245,245,.16); }
+  .aula-nav-item::before { display: none; }
+  .aula-nav-item.is-active { border-color: var(--yellow); background: rgba(255,196,0,.08); }
+  .aula-nav-item:hover:not(.is-active) { transform: none; }
+  .aula-nav-num { font-size: 1rem; }
+  .aula-nav-title { font-size: 0.85rem; }
+  /* No room for a progress bar in a compact pill — the "01 / 06" counter on
+     the card itself carries that job on mobile. */
+  .aula-nav-progress { display: none; }
+
+  /* No hover on touch — arrows and the "Conhecer modalidade" pill stay
+     visible outright instead of being gated behind a state that can't fire. */
+  .aula-arrow { opacity: 1; top: 25%; }
+  .aula-slide-more { opacity: 1; transform: none; }
+  /* The bottom-right corner is where the fixed WhatsApp button floats on
+     every page in this viewport — move the counter to bottom-left instead
+     of fighting it for the same corner. */
+  .aula-card-progress { left: 26px; right: auto; }
 
   .structure-grid { grid-template-columns: repeat(2, 1fr); }
   .plans-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; gap: 30px; }
@@ -1299,13 +1390,17 @@ a { color: inherit; text-decoration: none; }
   .diff-num { font-size: 1.6rem; }
   .diff-item-title { font-size: 1.02rem; }
 
-  .aula-item { grid-template-columns: 44px 1fr; gap: 14px; padding: 20px 4px; }
-  .aula-item::before { left: -22px; }
-  .aula-num { font-size: 1.6rem; }
-  .aula-item-title { font-size: 1.02rem; }
+  .aula-nav-item { padding: 10px 15px; gap: 8px; }
+  .aula-nav-num { font-size: 0.92rem; }
+  .aula-nav-title { font-size: 0.8rem; }
   .aulas-cta-label { font-size: 1.1rem; }
   .aula-slide-content { padding: 24px 22px 22px; }
-  .aula-visual::before, .aula-visual::after { width: 24px; height: 24px; }
+  .aula-slide-more { top: 18px; right: 18px; padding: 7px 13px; font-size: 0.66rem; }
+  .aula-card-progress { left: 20px; right: auto; bottom: 20px; font-size: 0.78rem; }
+  .aula-arrow { width: 36px; height: 36px; }
+  .aula-arrow-prev { left: 12px; }
+  .aula-arrow-next { right: 12px; }
+  .aula-card::before, .aula-card::after { width: 24px; height: 24px; }
 
   .plans-grid { grid-template-columns: 1fr; gap: 26px; }
   .plan-featured,

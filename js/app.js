@@ -403,37 +403,45 @@
     setActive(initial >= 0 ? initial : 0);
   }
 
-  /* ---------- Aulas: interactive list ↔ visual panel ----------
-     Same pattern as wireDifferentials above (hover/click/focus crossfades a
-     shared image panel; mobile relocates that one panel node into an
-     accordion slot instead of duplicating it) — kept as its own function
-     since the two sections are unrelated content, not a shared component. */
+  /* ---------- Aulas: cinematic carousel ----------
+     A numbered nav (desktop: vertical list / mobile: horizontal drag-scroll
+     strip) drives one shared media card. Switching slides crossfades +
+     settles from a slight zoom AND wipes in laterally via clip-path (see the
+     .aula-slide CSS) — direction-aware, so next/prev/autoplay all wipe the
+     way the user would expect. Slow autoplay advances the carousel until the
+     first real interaction (click/arrow/drag/hover), then stops for good. */
   function wireAulas() {
     const section = document.getElementById('aulas');
     if (!section) return;
-    const items = Array.from(section.querySelectorAll('.aula-item'));
-    const wraps = Array.from(section.querySelectorAll('.aula-item-wrap'));
+    const items = Array.from(section.querySelectorAll('.aula-nav-item'));
     const slides = Array.from(section.querySelectorAll('.aula-slide'));
-    const visual = document.getElementById('aula-visual');
-    const desktopMount = section.querySelector('.aulas-visual-col');
-    if (!items.length || !visual || !desktopMount) return;
+    const card = document.getElementById('aula-card');
+    const progressFills = items.map((el) => el.querySelector('.aula-nav-progress-fill'));
+    const progressCurrent = section.querySelector('.aula-card-progress-current');
+    const progressTotal = section.querySelector('.aula-card-progress-total');
+    const arrowPrev = section.querySelector('.aula-arrow-prev');
+    const arrowNext = section.querySelector('.aula-arrow-next');
+    if (!items.length || !slides.length || !card) return;
 
-    const mobileQuery = window.matchMedia('(max-width: 1024px)');
+    const AUTOPLAY_MS = 6000;
     let activeIndex = -1;
+    let autoplayEnabled = true;
+    let autoplayTimer = null;
 
-    // Some slides (Jump, Fit Dance, Pilates, Bike) are real muted videos, not
-    // photos — each only plays while its own slide is the active one (saves
-    // bandwidth/battery for whichever of the 8 slides aren't showing), and
+    if (progressTotal) progressTotal.textContent = String(items.length).padStart(2, '0');
+
+    // Slides are real muted videos — each only plays while its own slide is
+    // active (saves bandwidth/battery for the 5 that aren't showing), and
     // all of them pause once the whole section scrolls out of view.
     //
     // Deliberately NOT using the shared setupAutoplay() helper here: its
     // window-level scroll/click/touchstart retry listeners are meant for a
-    // single page-load video fighting an autoplay block. With up to 4 of
+    // single page-load video fighting an autoplay block. With several of
     // these videos alive at once, those broad listeners cross-fire on any
-    // page scroll (e.g. scrolling to reach a lower list item) and race with
-    // setActive()'s own play/pause calls — a real bug caught in testing, not
-    // just theoretical. A click/hover selecting a slide is itself the user
-    // gesture that makes play() reliable, so no retry plumbing is needed.
+    // page scroll and race with setActive()'s own play/pause calls — a real
+    // bug caught in testing, not just theoretical. A click/arrow/drag/
+    // autoplay-tick selecting a slide is itself enough for play() to work
+    // reliably, so no retry plumbing is needed there.
     const slideVideos = slides.map((slide) => {
       const video = slide.querySelector('.aula-slide-video');
       if (!video) return null;
@@ -458,37 +466,41 @@
       io.observe(section);
     }
 
-    function slotFor(wrap) { return wrap.querySelector('.aula-item-mobile-slot'); }
-
-    function syncMobileSlots() {
-      wraps.forEach((wrap, i) => {
-        const slot = slotFor(wrap);
-        if (!slot) return;
-        slot.style.maxHeight = (mobileQuery.matches && i === activeIndex)
-          ? `${slot.scrollHeight}px`
-          : '0px';
+    function stopAutoplay() {
+      autoplayEnabled = false;
+      if (autoplayTimer) { clearTimeout(autoplayTimer); autoplayTimer = null; }
+      // Freeze every fill where it stands rather than mid-animation — the
+      // active item's reads as "selected" (full), the rest stay empty.
+      progressFills.forEach((fill, i) => {
+        if (!fill) return;
+        fill.classList.remove('is-autoplaying');
+        fill.style.animation = 'none';
+        fill.style.width = i === activeIndex ? '100%' : '0';
       });
     }
 
-    function placeVisualPanel() {
-      if (mobileQuery.matches) {
-        const slot = wraps[activeIndex] && slotFor(wraps[activeIndex]);
-        if (slot && visual.parentElement !== slot) slot.appendChild(visual);
-      } else if (visual.parentElement !== desktopMount) {
-        desktopMount.appendChild(visual);
+    function armAutoplay() {
+      if (!autoplayEnabled) return;
+      if (autoplayTimer) clearTimeout(autoplayTimer);
+      autoplayTimer = setTimeout(() => {
+        goTo((activeIndex + 1) % items.length, 'next', true);
+      }, AUTOPLAY_MS);
+
+      const fill = progressFills[activeIndex];
+      if (fill) {
+        fill.classList.remove('is-autoplaying');
+        fill.style.animation = 'none';
+        fill.style.width = '0';
+        void fill.offsetWidth; // restart the CSS animation from 0
+        fill.style.animation = '';
+        fill.style.animationDuration = `${AUTOPLAY_MS}ms`;
+        fill.classList.add('is-autoplaying');
       }
-      requestAnimationFrame(syncMobileSlots);
     }
 
-    function setActive(index) {
-      // A single click on a <button> fires mouseenter, focus AND click in
-      // quick succession — all three are wired to setActive(i) with the same
-      // index, so without this guard every click re-runs the whole function
-      // (and every video's play()/pause()) three times over a few ms, which
-      // raced badly in testing. Placing/measuring the mobile panel is the
-      // one thing worth re-running even for a same-index call (e.g. after a
-      // resize), so that part happens either way.
-      if (index === activeIndex) { placeVisualPanel(); return; }
+    function setActive(index, direction) {
+      const prevIndex = activeIndex;
+      if (index === prevIndex) return;
       activeIndex = index;
 
       items.forEach((el, i) => {
@@ -496,8 +508,38 @@
         el.classList.toggle('is-active', active);
         el.setAttribute('aria-selected', String(active));
       });
-      wraps.forEach((el, i) => el.classList.toggle('is-open', i === index));
-      slides.forEach((el, i) => el.classList.toggle('is-active', i === index));
+      if (progressCurrent) progressCurrent.textContent = String(index + 1).padStart(2, '0');
+
+      // Prime the incoming slide's starting clip-path (direction-dependent)
+      // before it becomes active, so there's something for the transition to
+      // animate from — then flip it active one frame later.
+      const incoming = slides[index];
+      const dirClass = direction === 'prev' ? 'entering-prev' : 'entering-next';
+      incoming.classList.remove('entering-next', 'entering-prev', 'is-active');
+      incoming.classList.add(dirClass, 'is-top');
+      void incoming.offsetWidth; // force reflow so the removal above "sticks" as a start state
+      requestAnimationFrame(() => {
+        // Drop the entering-* class in the same tick as adding is-active: its
+        // clip-path rule outranks the base one, so leaving it on would pin
+        // clip-path at the start value forever instead of animating to
+        // inset(0) — this class swap is exactly what gives the transition
+        // both a "from" and a "to" value to interpolate between.
+        incoming.classList.remove(dirClass);
+        incoming.classList.add('is-active');
+      });
+
+      // The outgoing slide stays visible (still .is-active) underneath the
+      // incoming slide's wipe — clip-path naturally reveals it through the
+      // not-yet-covered area — then gets cleaned up once the wipe is done.
+      if (prevIndex > -1 && prevIndex !== index) {
+        const outgoing = slides[prevIndex];
+        setTimeout(() => {
+          outgoing.classList.remove('is-active', 'entering-next', 'entering-prev');
+          incoming.classList.remove('is-top');
+        }, 900);
+      } else {
+        setTimeout(() => incoming.classList.remove('is-top'), 900);
+      }
 
       slideVideos.forEach((sv, i) => {
         if (!sv) return;
@@ -516,29 +558,61 @@
         }
       });
 
-      placeVisualPanel();
+      if (mobileNavSync) mobileNavSync(index);
+    }
+
+    function goTo(index, direction, fromAutoplay) {
+      setActive(index, direction);
+      if (fromAutoplay) armAutoplay();
+      else stopAutoplay();
     }
 
     items.forEach((el, i) => {
-      el.addEventListener('click', () => setActive(i));
-      el.addEventListener('focus', () => setActive(i));
-      el.addEventListener('mouseenter', () => {
-        if (!mobileQuery.matches) setActive(i);
-      });
+      el.addEventListener('click', () => goTo(i, i > activeIndex ? 'next' : 'prev'));
     });
+    if (arrowPrev) arrowPrev.addEventListener('click', () => goTo((activeIndex - 1 + items.length) % items.length, 'prev'));
+    if (arrowNext) arrowNext.addEventListener('click', () => goTo((activeIndex + 1) % items.length, 'next'));
 
-    const onBreakpointChange = () => placeVisualPanel();
-    if (mobileQuery.addEventListener) {
-      mobileQuery.addEventListener('change', onBreakpointChange);
-    } else if (mobileQuery.addListener) {
-      mobileQuery.addListener(onBreakpointChange);
-    }
-    window.addEventListener('resize', () => {
-      if (mobileQuery.matches) requestAnimationFrame(syncMobileSlots);
-    }, { passive: true });
+    // Any deliberate hover on the card itself counts as "the user is
+    // interacting" — autoplay stops instead of yanking the slide out from
+    // under someone reading it or about to click "Quero experimentar".
+    card.addEventListener('mouseenter', stopAutoplay);
+
+    // Minimal swipe: horizontal pointer drag past a small threshold advances
+    // the carousel; a short/vertical drag is treated as a tap or a scroll
+    // attempt and ignored.
+    let dragStartX = null, dragStartY = null, dragging = false;
+    card.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      dragStartX = e.clientX; dragStartY = e.clientY; dragging = true;
+    });
+    card.addEventListener('pointerup', (e) => {
+      if (!dragging || dragStartX === null) { dragging = false; return; }
+      dragging = false;
+      stopAutoplay();
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) goTo((activeIndex + 1) % items.length, 'next');
+        else goTo((activeIndex - 1 + items.length) % items.length, 'prev');
+      }
+      dragStartX = null;
+    });
+    card.addEventListener('pointercancel', () => { dragging = false; dragStartX = null; });
+
+    // On mobile the nav is a horizontally scrollable strip of pills — keep
+    // the active one scrolled into view when the card changes via arrows/
+    // swipe/autoplay (not just when tapped directly).
+    const mobileQuery = window.matchMedia('(max-width: 1024px)');
+    const mobileNavSync = (index) => {
+      if (!mobileQuery.matches) return;
+      const el = items[index];
+      if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    };
 
     const initial = items.findIndex((el) => el.classList.contains('is-active'));
-    setActive(initial >= 0 ? initial : 0);
+    setActive(initial >= 0 ? initial : 0, 'next');
+    armAutoplay();
   }
 
   /* ---------- Scroll reveal ---------- */
