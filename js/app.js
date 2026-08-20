@@ -504,6 +504,13 @@
         if (i === index) {
           if (sv.video.preload === 'none') sv.video.preload = 'auto';
           sv.tryPlay();
+          // Safety net: an async play() racing another slide's pause() can
+          // occasionally leave this video paused despite the call above
+          // (seen in testing). If it's still paused shortly after and this
+          // slide is still the active one, give it one more nudge.
+          setTimeout(() => {
+            if (activeIndex === i && sv.video.paused) sv.tryPlay();
+          }, 300);
         } else {
           sv.video.pause();
         }

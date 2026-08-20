@@ -304,9 +304,18 @@
       <div class="aula-visual" id="aula-visual">
 
         <div class="aula-slide is-active" data-slide="0">
-          <div class="aula-slide-panel">
-            <span class="aula-slide-panel-word">POWER</span>
-          </div>
+          <video
+            class="aula-slide-video"
+            muted
+            loop
+            playsinline
+            webkit-playsinline="true"
+            preload="none"
+            poster="assets/img/aula-hiit-poster.jpg"
+            aria-label="Aula de HIIT na Recanto Fitness">
+            <source src="assets/video/aula-hiit.mp4" type="video/mp4">
+          </video>
+          <div class="aula-slide-overlay"></div>
           <div class="aula-slide-content">
             <div class="aula-tags"><span class="aula-tag">Intensidade</span><span class="aula-tag">Cardio</span></div>
             <h3 class="aula-slide-name">HIIT</h3>
@@ -355,7 +364,17 @@
         </div>
 
         <div class="aula-slide" data-slide="3">
-          <img src="assets/img/aula-zumba.webp" alt="Aula de Zumba na Recanto Fitness" loading="lazy">
+          <video
+            class="aula-slide-video"
+            muted
+            loop
+            playsinline
+            webkit-playsinline="true"
+            preload="none"
+            poster="assets/img/aula-zumba-poster.jpg"
+            aria-label="Aula de Zumba na Recanto Fitness">
+            <source src="assets/video/aula-zumba.mp4" type="video/mp4">
+          </video>
           <div class="aula-slide-overlay"></div>
           <div class="aula-slide-content">
             <div class="aula-tags"><span class="aula-tag">Dança</span><span class="aula-tag">Diversão</span></div>
