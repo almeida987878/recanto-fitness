@@ -186,7 +186,9 @@
       const copyT = stageT(progress, P.copyStart, P.copyEnd);
       if (teamCopy) {
         teamCopy.style.opacity = String(copyT);
-        teamCopy.style.transform = `translateY(${lerp(30, 0, copyT)}px)`;
+        // -50% keeps it vertically centered (see .team-copy in style.css);
+        // the added px term is just the entrance slide-up, fading to 0.
+        teamCopy.style.transform = `translateY(calc(-50% + ${lerp(30, 0, copyT)}px))`;
       }
 
       // Final blackout, handing off to the Hero underneath once the pin releases.
