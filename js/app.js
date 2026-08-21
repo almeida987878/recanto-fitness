@@ -605,11 +605,22 @@
     // On mobile the nav is a horizontally scrollable strip of pills — keep
     // the active one scrolled into view when the card changes via arrows/
     // swipe/autoplay (not just when tapped directly).
+    //
+    // Deliberately NOT using Element.scrollIntoView() here: even with
+    // block:'nearest', it's free to (and in testing, did) drag the whole
+    // page's vertical scroll position along with the horizontal one on
+    // mobile browsers — so every ~6s autoplay tick was yanking the page
+    // out from under someone reading it, with no touch involved at all.
+    // Scrolling the strip's own scrollLeft directly can only ever move
+    // horizontally, so the page's vertical position is never touched.
+    const navStrip = section.querySelector('.aula-nav');
     const mobileQuery = window.matchMedia('(max-width: 1024px)');
     const mobileNavSync = (index) => {
-      if (!mobileQuery.matches) return;
+      if (!mobileQuery.matches || !navStrip) return;
       const el = items[index];
-      if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      if (!el) return;
+      const target = el.offsetLeft - (navStrip.clientWidth - el.offsetWidth) / 2;
+      navStrip.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
     };
 
     const initial = items.findIndex((el) => el.classList.contains('is-active'));
