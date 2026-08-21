@@ -628,6 +628,119 @@
     armAutoplay();
   }
 
+  /* ---------- Estrutura: Stories-style carousel (mobile only) ----------
+     Desktop keeps the plain 4-up photo grid untouched; below 720px this
+     turns it into an Instagram-Stories-like experience — one full-bleed
+     photo at a time, a segmented progress bar, tap zones on each side and
+     swipe, with a slow autoplay that stops for good on first interaction.
+     The caption always stays below the photo (never overlaid on it) so the
+     image itself stays clean. */
+  function wireStructureStories() {
+    const grid = document.getElementById('structure-grid');
+    const progress = document.getElementById('structure-progress');
+    if (!grid) return;
+    const items = Array.from(grid.querySelectorAll('.structure-item'));
+    const segs = progress ? Array.from(progress.querySelectorAll('.structure-progress-seg')) : [];
+    if (items.length < 2) return;
+
+    const AUTOPLAY_MS = 4500;
+    const mobileQuery = window.matchMedia('(max-width: 720px)');
+    let activeIndex = -1;
+    let autoplayEnabled = true;
+    let timer = null;
+
+    function stopAutoplay() {
+      autoplayEnabled = false;
+      if (timer) { clearTimeout(timer); timer = null; }
+      // Same convention as the Aulas nav: freeze every fill where it should
+      // read, not mid-animation — everything up to and including the active
+      // slide shows "seen" (full), the rest stay empty.
+      segs.forEach((seg, i) => {
+        const fill = seg.querySelector('.structure-progress-fill');
+        if (!fill) return;
+        fill.style.animationName = 'none';
+        fill.style.width = i <= activeIndex ? '100%' : '0';
+      });
+    }
+
+    function armAutoplay() {
+      if (!autoplayEnabled || !mobileQuery.matches) return;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => goTo((activeIndex + 1) % items.length, true), AUTOPLAY_MS);
+    }
+
+    function setActive(index) {
+      if (index === activeIndex) return;
+      activeIndex = index;
+      items.forEach((el, i) => el.classList.toggle('is-active', i === index));
+      segs.forEach((seg, i) => {
+        const fill = seg.querySelector('.structure-progress-fill');
+        seg.classList.toggle('is-done', i < index);
+        seg.classList.toggle('is-active', i === index);
+        if (!fill) return;
+        fill.style.animationName = 'none';
+        void fill.offsetWidth; // restart the fill animation from 0
+        if (i === index) {
+          fill.style.animationDuration = `${AUTOPLAY_MS}ms`;
+          fill.style.animationName = 'structureFill';
+        }
+      });
+    }
+
+    function goTo(index, fromAutoplay) {
+      setActive(index);
+      if (fromAutoplay) armAutoplay();
+      else stopAutoplay();
+    }
+
+    items.forEach((item) => {
+      const prev = item.querySelector('.structure-tap-prev');
+      const next = item.querySelector('.structure-tap-next');
+      if (prev) prev.addEventListener('click', () => goTo((activeIndex - 1 + items.length) % items.length));
+      if (next) next.addEventListener('click', () => goTo((activeIndex + 1) % items.length));
+    });
+
+    // Same minimal swipe pattern as the Aulas carousel: a short/vertical
+    // drag is a tap or scroll attempt and is ignored.
+    let dragStartX = null, dragStartY = null, dragging = false;
+    grid.addEventListener('pointerdown', (e) => {
+      if (!mobileQuery.matches) return;
+      dragStartX = e.clientX; dragStartY = e.clientY; dragging = true;
+    });
+    grid.addEventListener('pointerup', (e) => {
+      if (!dragging || dragStartX === null) { dragging = false; return; }
+      dragging = false;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) goTo((activeIndex + 1) % items.length);
+        else goTo((activeIndex - 1 + items.length) % items.length);
+      }
+      dragStartX = null;
+    });
+    grid.addEventListener('pointercancel', () => { dragging = false; dragStartX = null; });
+
+    function start() {
+      if (!mobileQuery.matches) return;
+      // These slides double as scroll-reveal cards on desktop — bypass that
+      // system here so a slide that hasn't been scroll-triggered yet still
+      // renders at full opacity the moment it becomes the active story.
+      items.forEach((el) => el.classList.add('in-view'));
+      activeIndex = -1;
+      autoplayEnabled = true;
+      setActive(0);
+      armAutoplay();
+    }
+    function onBreakpointChange() {
+      if (mobileQuery.matches) start();
+      else stopAutoplay();
+    }
+    if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', onBreakpointChange);
+    else if (mobileQuery.addListener) mobileQuery.addListener(onBreakpointChange);
+
+    start();
+  }
+
   /* ---------- FAQ: single-open accordion ---------- */
   function wireFaq() {
     const items = Array.from(document.querySelectorAll('.faq-item'));
@@ -765,6 +878,7 @@
     wireShowcaseParallax();
     wireDifferentials();
     wireAulas();
+    wireStructureStories();
     wireFaq();
     wireReveal();
     wireCounters();

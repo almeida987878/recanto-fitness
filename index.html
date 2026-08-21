@@ -443,24 +443,49 @@
     <p class="eyebrow reveal">Tudo o que você precisa para treinar</p>
     <h2 class="section-title reveal">ENTRE PARA TREINAR.<br>SAIA <span class="text-yellow">QUERENDO VOLTAR.</span></h2>
 
-    <div class="structure-grid">
-      <article class="structure-item reveal">
-        <div class="structure-img"><img src="assets/img/musculacao-completa-grid.webp" alt="Área de musculação completa da Recanto Fitness, academia na Zona Leste de São Paulo" loading="lazy" width="900" height="1600"></div>
+    <!-- Progress bar segments (mobile only) — one per slide, fills like an
+         Instagram Stories bar as the story-style carousel below advances. -->
+    <div class="structure-progress" id="structure-progress" aria-hidden="true">
+      <span class="structure-progress-seg"><span class="structure-progress-fill"></span></span>
+      <span class="structure-progress-seg"><span class="structure-progress-fill"></span></span>
+      <span class="structure-progress-seg"><span class="structure-progress-fill"></span></span>
+      <span class="structure-progress-seg"><span class="structure-progress-fill"></span></span>
+    </div>
+
+    <div class="structure-grid" id="structure-grid">
+      <article class="structure-item reveal" data-index="0">
+        <div class="structure-img">
+          <img src="assets/img/musculacao-completa-grid.webp" alt="Área de musculação completa da Recanto Fitness, academia na Zona Leste de São Paulo" loading="lazy" width="900" height="1600">
+          <button type="button" class="structure-tap structure-tap-prev" aria-label="Item anterior"></button>
+          <button type="button" class="structure-tap structure-tap-next" aria-label="Próximo item"></button>
+        </div>
         <h3><span class="text-yellow">01</span> — Musculação Completa</h3>
         <p>Máquinas e equipamentos para trabalhar os diferentes grupos musculares, do iniciante ao avançado.</p>
       </article>
-      <article class="structure-item reveal">
-        <div class="structure-img"><img src="assets/img/pesos-livres-grid.webp" alt="Área de pesos livres da Recanto Fitness" loading="lazy" width="1000" height="667"></div>
+      <article class="structure-item reveal" data-index="1">
+        <div class="structure-img">
+          <img src="assets/img/pesos-livres-grid.webp" alt="Área de pesos livres da Recanto Fitness" loading="lazy" width="1000" height="667">
+          <button type="button" class="structure-tap structure-tap-prev" aria-label="Item anterior"></button>
+          <button type="button" class="structure-tap structure-tap-next" aria-label="Próximo item"></button>
+        </div>
         <h3><span class="text-yellow">02</span> — Pesos Livres</h3>
         <p>Halteres, barras e anilhas para quem quer desenvolver força, hipertrofia e performance.</p>
       </article>
-      <article class="structure-item reveal">
-        <div class="structure-img"><img src="assets/img/cardio-esteiras-grid.webp" alt="Área de cardio da Recanto Fitness, academia na Terceira Divisão" loading="lazy" width="900" height="1575"></div>
+      <article class="structure-item reveal" data-index="2">
+        <div class="structure-img">
+          <img src="assets/img/cardio-esteiras-grid.webp" alt="Área de cardio da Recanto Fitness, academia na Terceira Divisão" loading="lazy" width="900" height="1575">
+          <button type="button" class="structure-tap structure-tap-prev" aria-label="Item anterior"></button>
+          <button type="button" class="structure-tap structure-tap-next" aria-label="Próximo item"></button>
+        </div>
         <h3><span class="text-yellow">03</span> — Área de Cardio</h3>
         <p>Esteiras e bikes para desenvolver condicionamento, resistência e complementar seus treinos.</p>
       </article>
-      <article class="structure-item reveal">
-        <div class="structure-img"><img src="assets/img/aula-fitball-1-grid.webp" alt="Aulas coletivas da Recanto Fitness" loading="lazy" width="1000" height="667"></div>
+      <article class="structure-item reveal" data-index="3">
+        <div class="structure-img">
+          <img src="assets/img/aula-fitball-1-grid.webp" alt="Aulas coletivas da Recanto Fitness" loading="lazy" width="1000" height="667">
+          <button type="button" class="structure-tap structure-tap-prev" aria-label="Item anterior"></button>
+          <button type="button" class="structure-tap structure-tap-next" aria-label="Próximo item"></button>
+        </div>
         <h3><span class="text-yellow">04</span> — Aulas e Modalidades</h3>
         <p>Mais possibilidades para você sair da rotina e encontrar uma atividade que combine com seu estilo.</p>
       </article>
