@@ -883,13 +883,8 @@ a { color: inherit; text-decoration: none; }
 .objection-lead { color: var(--white) !important; font-weight: 800; font-size: 1.2rem !important; }
 
 /* ============================================
-   08 — IMPACTO
+   08 — IMPACTO (título compartilhado com o CTA final)
    ============================================ */
-.impact { position: relative; padding: 220px 0; overflow: hidden; }
-.impact-bg { position: absolute; inset: 0; }
-.impact-bg img { width: 100%; height: 100%; object-fit: cover; }
-.impact-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,8,8,.75), rgba(8,8,8,.9)); }
-.impact-content { position: relative; text-align: center; margin: 0 auto; }
 .impact-title {
   font-family: var(--font-display);
   font-weight: 400;
@@ -898,7 +893,6 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   margin-bottom: 24px;
 }
-.impact-sub { color: var(--gray); font-size: 1.15rem; margin-bottom: 34px; }
 
 /* ============================================
    09 — PLANOS
@@ -1550,7 +1544,6 @@ a { color: inherit; text-decoration: none; }
      "Quero Começar na Recanto Fitness →") — .btn's nowrap is fine at desktop
      widths but forces these past the viewport on mobile. Letting them wrap
      to two centered lines keeps the exact requested copy without overflow. */
-  .impact-content .btn,
   .cta-final-content .btn,
   .identify-content .btn,
   .objection-content .btn,
@@ -1562,7 +1555,6 @@ a { color: inherit; text-decoration: none; }
   }
 
   .about, .structure, .differentials, .aulas, .plans, .testimonials, .hours, .location, .contact, .identify, .objection, .faq { padding: 90px 0; }
-  .impact { padding: 140px 0; }
   .cta-final { padding: 140px 0; }
   .objection-quote-mark { font-size: 9rem; }
 
