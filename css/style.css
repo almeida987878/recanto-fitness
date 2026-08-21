@@ -830,12 +830,19 @@ a { color: inherit; text-decoration: none; }
 .diff-slide-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,8,8,0) 40%, rgba(8,8,8,.85) 100%); }
 .diff-slide-overlay-strong { background: rgba(8,8,8,.62); }
 
+/* Horário slide has no photo — a radial glow + clock face stand in its place. */
+.diff-slide-hours-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 42%, rgba(247,181,0,0.14), transparent 60%), var(--graphite);
+}
+
 .diff-slide-panel {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; padding: 20px;
 }
 .diff-slide-pin { color: var(--yellow); margin-bottom: 14px; }
+.diff-slide-clockface { width: clamp(110px, 22vw, 160px); height: auto; color: var(--white); margin-bottom: 22px; }
 .diff-slide-panel-big { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 3.6vw, 3.2rem); color: var(--white); line-height: 1; }
 .diff-slide-panel-big small { font-size: 0.55em; }
 .diff-slide-panel-big-sm { font-size: clamp(1.7rem, 2.8vw, 2.4rem); color: var(--yellow); }
