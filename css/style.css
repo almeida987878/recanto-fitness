@@ -603,39 +603,12 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(180deg, rgba(8,8,8,.05) 0%, rgba(8,8,8,.35) 55%, rgba(8,8,8,.94) 100%);
 }
 
-/* Hover-reveal secondary CTA — only shown for the active slide, so it can't
-   accidentally sit on top of a slide mid-transition. */
-.aula-slide-more {
-  position: absolute; top: 26px; right: 26px; z-index: 4;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 9px 16px;
-  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--black);
-  background: var(--yellow);
-  border-radius: 999px;
-  text-decoration: none;
-  opacity: 0; transform: translateY(-8px);
-  transition: opacity .35s var(--ease), transform .35s var(--ease);
-}
-.aula-card:hover .aula-slide.is-active .aula-slide-more { opacity: 1; transform: none; }
-
-/* Editorial content anchored at the base of the card: tags → name → phrase → CTA. */
+/* Content anchored at the base of the card: just the modality name — kept
+   deliberately minimal so the video itself stays the focus. */
 .aula-slide-content {
   position: absolute; left: 0; right: 0; bottom: 0;
   z-index: 3;
   padding: 36px 34px 34px;
-}
-.aula-tags { display: flex; gap: 10px; margin-bottom: 16px; }
-.aula-tag {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--yellow);
-  border: 1px solid rgba(255,196,0,0.4);
-  border-radius: 999px;
-  padding: 5px 13px;
-  background: rgba(255,196,0,0.06);
 }
 .aula-slide-name {
   font-family: var(--font-display);
@@ -644,11 +617,7 @@ a { color: inherit; text-decoration: none; }
   line-height: 1;
   text-transform: uppercase;
   color: var(--white);
-  margin-bottom: 12px;
 }
-.aula-slide-tagline { color: var(--yellow); font-weight: 700; font-size: 0.98rem; max-width: 30ch; margin-bottom: 10px; }
-.aula-slide-phrase { color: var(--gray); font-size: 0.95rem; max-width: 34ch; margin-bottom: 22px; }
-.aula-slide-cta { position: relative; z-index: 3; }
 
 /* Discreet prev/next arrows — quiet by default, confident on hover. */
 .aula-arrow {
@@ -1491,10 +1460,9 @@ a { color: inherit; text-decoration: none; }
      the card itself carries that job on mobile. */
   .aula-nav-progress { display: none; }
 
-  /* No hover on touch — arrows and the "Conhecer modalidade" pill stay
-     visible outright instead of being gated behind a state that can't fire. */
+  /* No hover on touch — arrows stay visible outright instead of being
+     gated behind a state that can't fire. */
   .aula-arrow { opacity: 1; top: 25%; }
-  .aula-slide-more { opacity: 1; transform: none; }
   /* The bottom-right corner is where the fixed WhatsApp button floats on
      every page in this viewport — move the counter to bottom-left instead
      of fighting it for the same corner. */
@@ -1613,8 +1581,9 @@ a { color: inherit; text-decoration: none; }
   .aula-nav-num { font-size: 0.92rem; }
   .aula-nav-title { font-size: 0.8rem; }
   .aulas-cta-label { font-size: 1.1rem; }
-  .aula-slide-content { padding: 24px 22px 22px; }
-  .aula-slide-more { top: 18px; right: 18px; padding: 7px 13px; font-size: 0.66rem; }
+  /* Extra bottom padding clears the "01/06" counter chip, which sits in
+     this same corner at a fixed position independent of the title. */
+  .aula-slide-content { padding: 24px 22px 54px; }
   .aula-card-progress { left: 20px; right: auto; bottom: 20px; font-size: 0.78rem; }
   .aula-arrow { width: 36px; height: 36px; }
   .aula-arrow-prev { left: 12px; }
