@@ -1206,7 +1206,7 @@ a { color: inherit; text-decoration: none; }
 .location-info a:hover { color: var(--yellow); }
 .location-actions { display: flex; gap: 16px; margin-top: 28px; flex-wrap: wrap; }
 .location-map { min-height: 380px; border-radius: 6px; overflow: hidden; }
-.location-map iframe { width: 100%; height: 100%; min-height: 380px; filter: grayscale(0.3) contrast(1.05); }
+.location-map iframe { width: 100%; height: 100%; min-height: 380px; filter: grayscale(0.3) contrast(1.05); border: 0; }
 
 /* ============================================
    14 — CONTATO
