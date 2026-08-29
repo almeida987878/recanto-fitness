@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.recantofitness.com.br/sitemap.xml
+Sitemap: https://www.academiarecantofit.com.br/sitemap.xml
