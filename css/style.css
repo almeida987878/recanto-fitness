@@ -929,7 +929,7 @@ a { color: inherit; text-decoration: none; }
 }
 .plan-card:hover::before { opacity: 1; }
 
-/* Featured (Trimestral): elevated, larger, unmistakably the plan to pick. */
+/* Featured (Anual): elevated, larger, unmistakably the plan to pick. */
 .plan-featured {
   background: linear-gradient(180deg, var(--graphite-2) 0%, var(--black-2) 100%);
   border: 2px solid var(--yellow);
@@ -955,8 +955,8 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
   box-shadow: 0 6px 18px rgba(255,196,0,0.35);
 }
-/* Quieter variant for the Anual card's "Melhor Valor" seal — a solid yellow
-   pill here would compete with the featured Trimestral card's own tag for
+/* Quieter outline variant for a secondary seal — a solid yellow pill on a
+   non-featured card would compete with the featured card's own tag for
    attention, diluting both. Outline reads as "notable" without claiming
    the same top spot. */
 .plan-tag-alt { background: var(--graphite-2); color: var(--yellow); border: 1.5px solid var(--yellow); box-shadow: none; }
